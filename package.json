@@ -1,3 +1,17 @@
-node_modules
-.c9
-.gitignore
+{
+  "name": "book-api",
+  "version": "0.0.0",
+  "description": "REST Api with Express and Mongoose",
+  "main": "server.js",
+  "repository": "",
+  "author": "",
+  "dependencies": {
+    "async": "~0.2.8",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "4.16.2",
+    "mongoose": "^4.13.9",
+    "nodemon": "^1.14.11",
+    "socket.io": "~0.9.14"
+  }
+}
