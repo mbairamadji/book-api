@@ -3,7 +3,7 @@ const http = require("http")
 //const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 const cors = require("cors")
-const route = require("./controller/book")
+const route = require("./routes")
 const app = express()
 //middlware
 app.use(express.json())

@@ -1,3 +1,4 @@
+const mongoose = require("mongoose")
 const express = require("express")
 const { Router } = require("express")
 const Book = require("../model/book")
@@ -5,12 +6,12 @@ const Review = require("../model/review")
 
 
 module.exports = Router()
+    //Create a book on path api/book/add
     .post('/add', (req, res) => {
         const newBook = new Book()
         newBook.title = req.body.title
         newBook.author = req.body.author
-   
-    newBook.save(err => {
+        newBook.save(err => {
         if (err) {
             res.send(err)
         } else {
@@ -19,7 +20,8 @@ module.exports = Router()
     })
     })
     
-    .get('/book', (req, res) => {
+    //Get all books on path api/book
+    .get('/', (req, res) => {
         Book.find({})
             .exec((err, books) => {
                 if (err) {
@@ -30,7 +32,8 @@ module.exports = Router()
             })
         })
         
-   /* .get('/:id', (req, res) => {
+   /* //Get a specific book using method findById
+   .get('/:id', (req, res) => {
         Book.findById(req.params.id, (err, book) => {
             if (err) {
                 res.send(err)
@@ -40,6 +43,7 @@ module.exports = Router()
         })
     }) */
     
+    //Get a specific book using method findOne
     .get('/:id', (req, res) => {
         Book.findOne({_id : req.params.id })
             .exec((err, book) => {
@@ -50,7 +54,8 @@ module.exports = Router()
                 }
             })
     })
-
+    
+    //Update a specific book using method findById
     .put('/:id', (req, res) => {
         Book.findById(req.params.id, (err, book) => {
             if (err) {
@@ -69,7 +74,8 @@ module.exports = Router()
         })
     })
 
-/*    .delete('/:id', (req, res) => {
+/*  //Delete a specific book using method findById and remove() 
+    .delete('/:id', (req, res) => {
         Book.findById(req.params.id , (err, book) => {
             if (err) {
                res.send(err) 
@@ -85,6 +91,7 @@ module.exports = Router()
         })
     }) */
     
+    //Delete a specific book using method remove()
     .delete('/:id', (req, res) => {
         Book.remove({ _id : req.params.id }, 
             (err) => {
@@ -95,7 +102,8 @@ module.exports = Router()
                 }
             })
     })
-
+    
+    //Create a review for a specific book on path api/book/reviews/add/:id
     .post('/reviews/add/:id', (req, res) => {
        Book.findById(req.params.id, (err, book) => {
            if (err) {
@@ -122,8 +130,9 @@ module.exports = Router()
               }
            }) 
         }) 
-     
-   .get('/reviews/:id', (req, res) => {
+    
+    //Get all reviews from a specific book
+    .get('/reviews/:id', (req, res) => {
        Review.find({book : req.params.id}, (err, review) => {
            if (err) {
              res.send(err)  
