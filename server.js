@@ -2,6 +2,8 @@ const express = require("express")
 const http = require("http")
 //const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
+const passport = require("passport")
+const LocalStrategy = require("passport-local").Strategy
 const cors = require("cors")
 const route = require("./routes")
 const config = require("./config/config")
@@ -21,6 +23,15 @@ mongoose.connect(config.db, {
 app.use('/api', route)
 
 //Passport config
+app.use(passport.initialize())
+const Account = require("./model/account")
+passport.use(new LocalStrategy({
+  usernameField : "email",
+  passwordField : "password"
+}, Account.authenticate()))
+
+passport.serializeUser(Account.serializeUser())
+passport.deserializeUser(Account.deserializeUser())
 
 
 const server = http.createServer(app)
