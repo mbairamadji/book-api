@@ -8,7 +8,7 @@ const cors = require("cors")
 const route = require("./routes")
 const config = require("./config/config")
 const app = express()
-//middlware
+//middelware
 app.use(express.json())
 app.use(cors())
 

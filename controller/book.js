@@ -3,11 +3,14 @@ const express = require("express")
 const { Router } = require("express")
 const Book = require("../model/book")
 const Review = require("../model/review")
+const Account = require("../model/account")
+const { authenticate } = require("../middleware/authMiddleware")
+
 
 
 module.exports = Router()
     //Create a book on path api/book/add
-    .post('/add', (req, res) => {
+    .post('/add', authenticate, (req, res) => {
         const newBook = new Book()
         newBook.title = req.body.title
         newBook.author = req.body.author
@@ -17,7 +20,7 @@ module.exports = Router()
         } else {
             res.json({message : "Book was saved succesfully"})
         }
-    })
+     })
     })
     
     //Get all books on path api/book
@@ -56,7 +59,7 @@ module.exports = Router()
     })
     
     //Update a specific book using method findById
-    .put('/:id', (req, res) => {
+    .put('/:id', authenticate, (req, res) => {
         Book.findById(req.params.id, (err, book) => {
             if (err) {
                 res.send(err)
@@ -92,7 +95,7 @@ module.exports = Router()
     }) */
     
     //Delete a specific book using method remove()
-    .delete('/:id', (req, res) => {
+    .delete('/:id', authenticate, (req, res) => {
         Book.remove({ _id : req.params.id }, 
             (err) => {
                 if (err) {
@@ -104,8 +107,8 @@ module.exports = Router()
     })
     
     //Create a review for a specific book on path api/book/reviews/add/:id
-    .post('/reviews/add/:id', (req, res) => {
-       Book.findById(req.params.id, (err, book) => {
+    .post('/reviews/add/:id', authenticate, (req, res) => {
+        Book.findById(req.params.id, (err, book) => {
            if (err) {
                res.send(err)
            } else {
