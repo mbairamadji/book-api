@@ -8,9 +8,11 @@ const cors = require("cors")
 const route = require("./routes")
 const config = require("./config/config")
 const app = express()
+
 //middelware
 app.use(express.json())
 app.use(cors())
+//app.use(express.static('client/public'))
 
 mongoose.Promise = global.Promise
 

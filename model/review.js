@@ -8,10 +8,10 @@ const ReviewSchema = new Schema({
         required : true
     },
     text : String,
-    book : {
-        type : Schema.Types.ObjectId ,
-        ref : "Book"
-    }
+    author : [{
+        type : Schema.Types.ObjectId,
+        ref : "Account"
+    }]
 })
 
 module.exports = mongoose.model("Review", ReviewSchema)

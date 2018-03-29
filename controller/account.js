@@ -29,3 +29,14 @@ module.exports = Router()
     .get('/me', authenticate, (req, res) => {
         res.status(200).json(req.user)
     })
+    
+    .get('/users', (req, res) =>{
+        Account.find()
+        .exec((err, account) => {
+            if (err) {
+              res.send(err)  
+            } else {
+              res.send(account)  
+            }
+        })
+    })
